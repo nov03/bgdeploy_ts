@@ -141,9 +141,8 @@ export class Toolchain extends Stack {
         });
 
         // ECRリポジトリの作成
-        const ecrRepo = new ecr.Repository(this, 'EcsTutorialRepo', {
+        const ecrRepo = new ecr.Repository(this, 'CreateECR', {
             repositoryName: 'ecs-tutorial',  // リポジトリ名を指定
-            // 他のオプションもここに設定できます
         });
         // リポジトリポリシーのステートメントを作成
         const policyStatement = new iam.PolicyStatement({
