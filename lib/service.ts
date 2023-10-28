@@ -144,7 +144,7 @@ export class Service extends Stack {
 
         // ECRリポジトリからコンテナイメージを取得。ecs-tutorialという名前のリポジトリで指定
         const containerImage = ecs.ContainerImage.fromRegistry(
-            `${props.pipelineAccount}.dkr.ecr.ap-northeast-1.amazonaws.com/ecs-tutorial:latest`
+            `${props.pipelineAccount.account}.dkr.ecr.ap-northeast-1.amazonaws.com/ecs-tutorial:latest`
         );
 
 
