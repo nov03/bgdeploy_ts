@@ -139,9 +139,39 @@ export class Toolchain extends Stack {
         const buildRole = new iam.Role(this, 'BuildRole', {
             assumedBy: new iam.ServicePrincipal('codebuild.amazonaws.com'),
         });
-        // 既存のECRリポジトリを参照
-        const ecrepo = ecr.Repository.fromRepositoryName(this, 'ExistingRepo', 'ecs-tutorial'); // リポジトリ名を適切に置き換えてください。
-        ecrepo.grantPullPush(buildRole)
+
+        // ECRリポジトリの作成
+        const ecrRepo = new ecr.Repository(this, 'EcsTutorialRepo', {
+            repositoryName: 'ecs-tutorial',  // リポジトリ名を指定
+            // 他のオプションもここに設定できます
+        });
+        // リポジトリポリシーのステートメントを作成
+        const policyStatement = new iam.PolicyStatement({
+            effect: iam.Effect.ALLOW,
+            actions: [
+            "ecr:GetDownloadUrlForLayer",
+            "ecr:BatchGetImage",
+            "ecr:BatchCheckLayerAvailability",
+            "ecr:PutImage",
+            "ecr:InitiateLayerUpload",
+            "ecr:UploadLayerPart",
+            "ecr:CompleteLayerUpload"
+            ],
+            principals: [new iam.ArnPrincipal(
+                cdk.Arn.format({
+                    arnFormat: cdk.ArnFormat.NO_RESOURCE_NAME,
+                    partition: "aws",
+                    region: '',  // IAMのARNにはリージョンは含まれないため、空文字列を指定します
+                    service: "iam",
+                    account: env.account,  // アカウントIDを直接指定します
+                    resource: "root"
+                }))
+            ]            
+        });
+  
+        // リポジトリポリシーを適用、Codebuildにpush権限を許可
+        ecrRepo.addToResourcePolicy(policyStatement);
+        ecrRepo.grantPullPush(buildRole)
 
 
         const dockerBuildStep = new pipelines.CodeBuildStep('DockerBuildStep', {
