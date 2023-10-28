@@ -6,13 +6,13 @@ import { Constants } from '../lib/constants';
 
 class Demo {
     // パイプラインを構成するアカウント(TOOLCHAIN_ACCOUNT)を指定
-    private static readonly TOOLCHAIN_ACCOUNT = 'XXXXXXXXX';
+    private static readonly TOOLCHAIN_ACCOUNT = '968841012693';
     private static readonly TOOLCHAIN_REGION = 'ap-northeast-1';
     // CodeCommit account is the same as the toolchain account
     public static readonly CODECOMMIT_REPO = Constants.APP_NAME;
     public static readonly CODECOMMIT_BRANCH = 'main';
     // ECSが稼働するアカウント(SERVICE_ACCOUNT)を指定
-    public static readonly SERVICE_ACCOUNT = 'YYYYYYYY';
+    public static readonly SERVICE_ACCOUNT = '461233751674';
     public static readonly SERVICE_REGION = Demo.TOOLCHAIN_REGION;
 
     public static main() {
