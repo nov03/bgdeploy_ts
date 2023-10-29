@@ -23,7 +23,7 @@
       }
   },  
    "cpu": "256",
-   "family": "fargate-task-definition",
+   "family": "FARGATE_TASK_DEFINITION",
    "memory": "512",
    "networkMode": "awsvpc",
    "requiresCompatibilities": [ 
